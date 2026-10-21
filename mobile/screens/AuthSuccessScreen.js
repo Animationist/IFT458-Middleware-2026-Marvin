@@ -19,13 +19,7 @@ const AuthSuccessScreen = ({ route, navigation }) => {
     const { user, token } = route.params;
     const { login } = route.params;
 
-    useEffect(() => {
-        if (login && user && token) {
-            login(user, token);
-            navigation.navigate('Home');
-        }
-    }, [login, user, token, navigation]);
-
+   
     return (
         <ScrollView style={styles.container}>
             {/* Success header with green background */}
@@ -54,7 +48,7 @@ const AuthSuccessScreen = ({ route, navigation }) => {
             <View style={styles.buttonGroup}>
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={() => navigation.navigate('Home')}
+                    onPress={() => login(user, token)}
                 >
                     <Text style={styles.buttonText}>Go to Home</Text>
                 </TouchableOpacity>

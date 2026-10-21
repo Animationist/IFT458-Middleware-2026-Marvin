@@ -23,7 +23,7 @@ const PHONE_API_BASE = 'http://192.168.1.31:4000/api/v1';
 
 // If running in web browser, use localhost automatically
 // If running on phone, use the IP address above
-const API_BASE = 'http://192.168.1.31:4000/api/v1';
+const API_BASE = 'http://localhost:4000/api/v1';
 // ============================================================
 
 // Import our cross-platform storage helper

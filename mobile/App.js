@@ -3,8 +3,11 @@
 
 // Manages screen navigation and user authentication state
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, StatusBar, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, StatusBar, Platform, ActivityIndicator } from 'react-native';
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // Import all screen components
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -86,13 +89,6 @@ function MainTabs({ user, token, onLogout }) {
                 tabBarActiveTintColor: '#ffffff',
                 tabBarInactiveTintColor: '#adb5bd',
                 tabBarStyle: styles.bottomNav,
-                tabBarButton: (props) => (
-                    <TouchableOpacity
-                        {...props}
-                        accessibilityLabel={`Navigate to ${route.name}`}
-                        accessibilityRole="button"
-                    />
-                ),
             })}
         >
             <Tab.Screen
@@ -100,11 +96,14 @@ function MainTabs({ user, token, onLogout }) {
                 component={MemoizedHomeScreen}
                 options={{ title: 'Home' }}
             />
-            <Tab.Screen
-                name="Books"
-                component={MemoizedBookExchangeScreen}
-                options={{ title: 'Books' }}
-            />
+            <Tab.Screen name="Books" options={{ title: 'Books' }}>
+                {(props) => (
+                    <MemoizedBookExchangeScreen
+                        {...props}
+                        user={user}
+                    />
+                )}
+            </Tab.Screen>
             <Tab.Screen
                 name="AddBook"
                 component={MemoizedAddBookScreen}
@@ -180,3 +179,20 @@ export default function App() {
         </AuthProvider>
     );
 }
+
+const styles = StyleSheet.create({
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    errorText: {
+        fontSize: 16,
+        marginBottom: 12,
+    },
+
+    bottomNav: {
+        backgroundColor: '#0d6efd',
+    },
+});
